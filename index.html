@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cuadros Buscador (Ignorar acentos)</title>
+  <title>Cuadros Buscador (Mostrar coincidencias)</title>
   <style>
     /* Estilos básicos */
     .container {
@@ -55,7 +55,7 @@
       ['Bote gatiller.', 'atomizador Bote gatillero', 'sonata 30ml' ],
       ['atomizador blanco 100ml', 'envase 100ML', 'envase plástico 100ML'],
       ['atomizador estriado 24/410 blanco'],
-      ['atomizador 24/410 transparente 150ml', 'lisa squat 300ml 24/410', 'bateríenvase plástico 300mla'],
+      ['atomizador 24/410 transparente 150ml', 'lisa squat 300ml 24/410', 'envase plástico 300mla'],
       ['bote serigrafiado 150ml', 'bote serigrafiado 150ml beyond the rose', 'bote serigrafiado 150ml mandarin fig','bote serigrafiado 150ml fresh whites','bote serigrafiado 150ml fig dream','bote serigrafiado good night','bote serigrafiado 150ml the blanc','bote serigrafiado 150ml holy forest','bote serigrafiado 150ml green tea bergamot','bote serigrafiado 150ml green tea bamboo','bote serigrafiado 150ml mr big','bote serigrafiado 150ml premium lavender','bote serigrafiado 150ml the et moi','bote serigrafiado 150ml be happy'],
       ['caja be happy','caja beyond the rose','caja cedarwood','caja fresh whites','caja good night','caja holy forest','caja mr big','caja '],
       ['', '', ''],
@@ -88,9 +88,15 @@
         const boxIndex = box.getAttribute('data-index');
         const boxData = boxesData[boxIndex];
 
+        // Resetear el contenido de cada cuadro al texto original (por ejemplo: "Cuadro 1")
+        box.textContent = `Cuadro ${parseInt(boxIndex) + 1}`;
+
         // Comprobamos si algún elemento del arreglo del cuadro coincide con el término de búsqueda, ignorando acentos
-        if (boxData.some(item => removeAccents(item.toLowerCase()).includes(searchTerm))) {
+        const matchedItem = boxData.find(item => removeAccents(item.toLowerCase()).includes(searchTerm));
+
+        if (matchedItem) {
           box.classList.add('green'); // Si coincide, cambia el color a verde
+          box.textContent = matchedItem; // También muestra el texto coincidente en la caja
         } else {
           box.classList.remove('green'); // Si no, quita el color verde
         }
